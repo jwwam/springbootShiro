@@ -1,0 +1,11 @@
+
+#dialog{
+	
+	padding: 25px;
+}
+.title{
+  float: left;
+  font-size: 16px;
+  text-align: center;
+  margin-left: 15px;
+}

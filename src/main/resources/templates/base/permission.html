@@ -1,0 +1,183 @@
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Springboot整合Shiro</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link href="../css/base/permission.css" rel="stylesheet"/>
+	<link type="text/css" rel="stylesheet" href="../js/jstree/themes/default/style.css"/>
+</head>
+
+<body>
+	<!--内容-->
+	<div id="page-wrapper" >
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">资源管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="../home/view">欢迎主页</a>&nbsp;&nbsp;<i
+						class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">主页</a>&nbsp;&nbsp;<i
+						class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">资源管理</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+	
+	
+		<div class="page-content">
+		
+			<div class="panel panel-default left">
+			    <div class="panel-body"  style="min-height: 550px">
+			        <div><h3>资源树列表</h3></div>
+			        <div id="jstree"></div>
+			    </div>
+			</div>
+			<div class="panel panel-default right">
+			    <!--<div class="panel-body" style="min-height: 550px">
+			        <div><h3>资源树属性</h3></div>
+			        <form action="#" id="defaultForm" class="form-horizontal" method="post" style="display: none">
+					<input id="id" name="id" value="" type="hidden"/>
+					<div class="form-body pal">
+						<div class="form-group name">
+		                    <label class="col-lg-3 control-label title">资源名称：</label>
+		                    <div class="col-lg-5">
+		                        <input id="name" name="name" type="text" placeholder="资源名称" class="form-control" />
+		                    </div>
+		                </div>
+		                <div class="form-group resourceType">
+		                    <label class="col-lg-3 control-label title">资源类型：</label>
+		                    <div class="col-lg-5">
+		                     		<select id="resourceType" name="resourceType" style="width: 100px;text-align: center;font-size: 16px;">
+										<option value="menu">菜单</option>
+										<option  value="button">按钮</option>
+									</select>
+		                    </div>
+		                </div>
+		                <div class="form-group url">
+		                    <label class="col-lg-3 control-label title">资源路径：</label>
+		                    <div class="col-lg-5">
+		                        <input id="url" name="url" type="text" placeholder="参考：userInfo/userView" class="form-control" />
+		                    </div>
+		                </div>
+		                <div class="form-group permission">
+		                    <label class="col-lg-3 control-label title">权限字符串:</label>
+		                    <div class="col-lg-5">
+		                        <input id="permission" name="permission" type="text" placeholder="参考menu：role:*；button：role:create" class="form-control" />
+		                        <span></span>
+		                    </div>
+		                </div>
+		                 <div class="form-group parentId">
+		                    <label class="col-lg-3 control-label title">父编号:</label>
+		                    <div class="col-lg-5">
+		                        <input id="parentId" name="parentId"  type="hidden" placeholder="父编号" class="form-control" />
+		                        <input id="parentId2"   type="text" disabled="disabled" placeholder="父编号" class="form-control" />
+		                    </div>
+		                </div>
+		                 <div class="form-group parentIds"  style="display: none;">
+		                    <label class="col-lg-3 control-label title">父编号列表:</label>
+		                    <div class="col-lg-5">
+		                        <input id="parentIds" name="parentIds" disabled="disabled" type="text" placeholder="父编号列表" class="form-control" />
+		                    </div>
+		                </div>
+		                 <div class="form-group available">
+		                    <label class="col-lg-3 control-label title">资源状态：</label>
+		                    <div class="col-lg-5">
+		                     		<select id="available" name="available" style="width: 100px;text-align: center;font-size: 16px;">
+										<option value="0">启用</option>
+										<option  value="1">禁用</option>
+									</select>
+		                    </div>
+		                </div>
+					</div>
+					
+					<div class="form-actions text-right pal">
+						<button type="submit" id="submitButton" class="btn btn-primary" >保存</button>
+					</div>
+				</form> 
+			    </div>-->
+			</div>
+			
+		</div>
+
+	</div>
+	<div id="permissiondialog5" class="title" style="display:none"></div>
+	<div class="modal fade" id="modal-resouce" tabindex="-1" role="dialog" aria-labelledby="modal-resouce-label" aria-hidden="true">
+		<div class="modal-dialog" style="width:55%;">
+			<div class="modal-content" >
+				<div class="modal-header" >
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="modal-resouce-label">资源树属性</h4>
+				</div>
+				<div class="modal-body" style="height:460px">
+						<form action="#" id="defaultForm" class="form-horizontal" method="post" style="display: none">
+							<input id="id" name="id" value="" type="hidden"/>
+							<div class="form-body pal">
+								<div class="form-group name">
+									<label class="col-lg-3 control-label title">资源名称：</label>
+									<div class="col-lg-5">
+										<input id="name" name="name" type="text" placeholder="资源名称" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group resourceType">
+									<label class="col-lg-3 control-label title">资源类型：</label>
+									<div class="col-lg-5">
+										<select id="resourceType" name="resourceType" style="width: 100px;text-align: center;font-size: 16px;">
+											<option value="menu">菜单</option>
+											<option  value="button">按钮</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group url">
+									<label class="col-lg-3 control-label title">资源路径：</label>
+									<div class="col-lg-5">
+										<input id="url" name="url" type="text" placeholder="参考：userInfo/userView" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group permission">
+									<label class="col-lg-3 control-label title">权限字符串:</label>
+									<div class="col-lg-5">
+										<input id="permission" name="permission" type="text" placeholder="参考menu：role:*；button：role:create" class="form-control" />
+										<span></span>
+									</div>
+								</div>
+								<div class="form-group parentId">
+									<label class="col-lg-3 control-label title">父编号:</label>
+									<div class="col-lg-5">
+										<input id="parentId" name="parentId"  type="hidden" placeholder="父编号" class="form-control" />
+										<input id="parentId2"   type="text" disabled="disabled" placeholder="父编号" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group parentIds"  style="display: none;">
+									<label class="col-lg-3 control-label title">父编号列表:</label>
+									<div class="col-lg-5">
+										<input id="parentIds" name="parentIds" disabled="disabled" type="text" placeholder="父编号列表" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group available">
+									<label class="col-lg-3 control-label title">资源状态：</label>
+									<div class="col-lg-5">
+										<select id="available" name="available" style="width: 100px;text-align: center;font-size: 16px;">
+											<option value="0">启用</option>
+											<option  value="1">禁用</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-actions text-right pal">
+								<button type="submit" id="submitButton" class="btn btn-primary" >保存</button>
+								<button type="button" id="closeresouce" class="btn btn-primary" >取消</button>
+							</div>
+						</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript" src="../js/home/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../js/jstree/jstree.js"></script>
+<script type="text/javascript" src="../base/permission.js"></script>
+</body>
+</html>

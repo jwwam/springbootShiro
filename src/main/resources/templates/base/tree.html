@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>电信系统</title>
+</head>
+<body>
+    <footer th:fragment="copy"> 
+     <input type="hidden" id="clickId" th:value="${clickId}" />
+	 <nav id="sidebar" role="navigation" data-step="2"
+			data-intro="Template has &lt;b&gt;many navigation styles&lt;/b&gt;"
+			data-position="right" class="navbar-default navbar-static-side">
+			<div class="sidebar-collapse menu-scroll">
+				<ul  id="side-menu" class="nav">
+					
+				</ul>
+			</div>
+			<script src="../base/tree.js"></script>
+		</nav>
+    </footer>
+</body>
+</html>

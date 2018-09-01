@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="Copyright" content="BLIT" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0,initial-scale=1.0,user-scalable=no" />
+    <title>登录</title>
+    <link href="../css/styles/bootstrap.min.css"  rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="../js/home/jquery-ui.css" />
+    <link href="../css/home/global.css" rel="stylesheet" />
+    <link href="../css/home/login.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/styles/regest/form-elements.css"/>
+    <link rel="stylesheet" href="../css/styles/regest/regest.css"/>
+    <!--<script type="text/javascript" src="../js/home/jquery-1.10.2.min.js"></script>-->
+    <script src="../js/jquery/jquery-1.11.1.js"></script>
+    <script src="../js/bootstrap/bootstrap.js"></script>
+    <script src="../js/jquery/jquery.backstretch.min.js"></script>
+    <script type="text/javascript" src="../js/home/jquery-ui.js"></script>
+    <script src="../base/login.js"></script>
+</head>
+
+<body>
+<div class="layui-header header login-header">
+    <div class="layui-main login-top-bg">
+        <div class="sitename">
+            <a class="logo" href="#">
+                <img src="../images/home/logo.jpg" alt="fhua" />
+            </a>
+            <h2>Springboot整合Shiro</h2>
+        </div>
+    </div>
+</div>
+<div class="login_content">
+    <div id="regist">
+        <div id="login-banner">
+            <a href="#" target="_blank">
+                <img src="../images/home/cda-index.jpg" />
+            </a>
+        </div>
+        <div id="login">
+            <form class="form-horizontal"  action="../login/loginUser" method="post">
+                <div th:text="${message}" class="failMsg">message</div>
+                <div class="form-group">
+                    <label for="username" class="col-sm-2 control-label">账号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="username" id="username"
+                               placeholder="请输入账号" value=""/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" name="password" id="password"
+                               placeholder="请输入密码" value=""/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">验证</label>
+                    <div class="col-sm-10">
+                        <input id = "vcode" type="text" name="vcode" placeholder="请输入验证码" maxlength="4" tabindex="3"  />
+                        <a href="#" id="js-get_mobile_vcode" class="button btn-disabled">
+                            <img src="../login/getGifCode" id="randImg"  onclick="changeValidateCode()"/>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">登录</button> <!--style="padding: 5px 20px 5px 20px;line-height: 0px;"-->
+                        <a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register">注册</a>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="layui-footer footer footer-doc">
+    <div class="layui-main">
+        <p>
+            <a id="pay" href="javascript:;"></a>
+            <a id="git" href="javascript:;">技术支持：https://blog.csdn.net/zhulier1124</a>
+        </p>
+    </div>
+</div>
+<div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h3 class="modal-title" id="modal-register-label">立即注册</h3>
+                <p>企业用户注册请输入企业名称:</p>
+            </div>
+
+            <div class="modal-body">
+                <form role="form" action="" id="regestform" method="post" class="registration-form">
+                    <div class="form-group">
+                        <label class="sr-only" for="zh">账号</label>
+                        <input type="text" name="zh" placeholder="账号" class="form-last-name form-control" id="zh"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="mm">密码</label>
+                        <input type="password" name="mm" placeholder="密码" class="form-email form-control" id="mm"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="gsmc">企业名称</label>
+                        <input type="text" name="gsmc" placeholder="请输入企业名称" class="form-first-name form-control" id="gsmc"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="phone">联系人电话</label>
+                        <input type="text" name="phone" placeholder="联系人电话" class="form-first-name form-control" id="phone"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="lxr">联系人姓名</label>
+                        <input type="text" name="lxr" placeholder="联系人姓名" class="form-first-name form-control" id="lxr"/>
+                    </div>
+                    <!--<div class="form-group">
+                        <label class="sr-only" for="form-about-yourself">About yourself</label>
+                        <textarea name="form-about-yourself" placeholder="About yourself..."
+                                  class="form-about-yourself form-control" id="form-about-yourself"></textarea>
+                    </div>-->
+                    <button type="submit" class="submitbtn">注册</button>
+                </form>
+
+            </div>
+        </div>
+        <div id="dialog" style="display:none;z-index: 9999 !important;"></div>
+    </div>
+</div>
+
+</body>
+</html>

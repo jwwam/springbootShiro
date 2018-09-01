@@ -1,0 +1,15 @@
+
+#dialog{
+	
+	padding: 25px;
+}
+.title{
+  float: left;
+  font-size: 16px;
+  text-align: center;
+  margin-left: 15px;
+}
+
+.col-lg-3{
+	width: 35% !important;
+}

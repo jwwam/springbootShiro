@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Springboot整合Shiro</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+	<!-- head 头部 -->
+   <div id="head" th:replace="base/header :: copy"></div>
+   <div id="wrapper">
+           <!--tree菜单 -->
+          <div id="tree" th:replace="base/tree :: copy"></div>
+           <!--内容-->
+          <div id="content" ></div>
+          <div id="footer" th:replace="base/footer :: copy"></div>
+    </div>
+	<script th:inline="javascript" src="../base/home.js"></script>
+
+</body>
+</html>

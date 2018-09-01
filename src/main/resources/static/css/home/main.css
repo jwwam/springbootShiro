@@ -1,0 +1,22 @@
+
+/*******tffx************/
+.page-content{
+	position: relative;
+}
+.page-content .search{
+	margin-left:250px;
+	float: left;
+	top: 30px;
+	position: absolute;
+
+	
+}
+.page-content .output{
+	float: right;
+}
+a{
+	cursor: pointer;
+}
+
+
+/*******************/

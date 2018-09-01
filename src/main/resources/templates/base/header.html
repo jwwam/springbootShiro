@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Springboot整合Shiro</title>
+</head>
+<body>
+	<header th:fragment="copy">
+	  	<link type="text/css" rel="stylesheet"  href="../css/styles/font-awesome.min.css" />
+		<link type="text/css" rel="stylesheet"	href="../css/styles/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../css/styles/all.css" />
+		<link type="text/css" rel="stylesheet" href="../css/home/upload.css" />
+		<link type="text/css" rel="stylesheet" href="../css/home/common.css" />
+		<link type="text/css" rel="stylesheet" href="../css/styles/main.css" />
+		<link type="text/css" rel="stylesheet" 	href="../css/styles/style-responsive.css" />
+		<link type="text/css" rel="stylesheet"	href="../css/styles/jquery.news-ticker.css" />
+		<!--<link href="../js/home/jquery-ui.css" rel="stylesheet"/>-->
+		<link type="text/css" rel="stylesheet" href="../js/home/easyui.css"/>
+		<link href="../js/bootstrap/bootstrapValidator.css" rel="stylesheet"/>
+		<link type="text/css" rel="stylesheet" href="../css/styles/jquery.news-ticker.css"/>
+		<script src="../js/home/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="../js/home/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../js/bootstrap/bootstrapValidator.js"></script>
+		<script src="../js/jquery/jquery.news-ticker.js"></script>
+		<script src="../base/header.js"></script>
+		<a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
+		<div id="header-topbar-option-demo" class="page-header-topbar">
+			<nav id="topbar" th:if="${session.user!=null}" role="navigation" style="margin-bottom: 0;"
+				data-step="3" class="navbar navbar-default navbar-static-top">
+				<div class="navbar-header">
+					<a id="logo"   class="navbar-brand">
+						<span class="fa fa-rocket"></span>
+						<span class="logo-text" >Springboot整合Shiro</span>
+					</a>
+				</div>
+				<div class="topbar-main" th:object="${session.user}" >
+					<a id="menu-toggle" href="#" class="hidden-xs">
+						<i class="fa fa-bars"></i></a>
+					<div th:if="*{state!=1}" class="news-update-box hidden-xs">
+						<span class="text-uppercase mrm pull-left text-white">News:</span>
+						<ul id="news-update"  class="ticker list-unstyled">
+							<li th:if="*{state==0}">系统检测到您是新注册用户，请先完成企业用户认证，上传企业营业执照即可完成认证。
+								<a onclick="openUpload()" href="#" style="font-size: 14px;color: #ff8346;">立即认证</a>
+								<!--  <span id="timeShow"></span>-->
+							</li>
+							<li th:if="*{state==3}">您提交的企业用户认证资料正在审核中，请您耐心等待。
+								<!--  <span id="timeShow"></span>-->
+							</li>
+							<li th:if="*{state==4}">您提交的企业用户认证资料审核未通过，原因：<span th:text="${session.user.reason}"></span>，您可以尝试再次提交，
+								<a onclick="openUpload()" href="#" style="font-size: 14px;color: #ff8346;">重新认证</a>
+								<!--  <span id="timeShow"></span>-->
+							</li>
+						</ul>
+					</div>
+					<ul class="nav navbar navbar-top-links navbar-right mbn">
+						<li class="dropdown topbar-user">
+							<a data-hover="dropdown" href="#" class="dropdown-toggle">
+								<img src="../images/avatar/48.png" alt="" class="img-responsive img-circle"/>&nbsp;
+								<!-- <span class="hidden-xs" th:unless="${session.user == null}" th:text="${session.user.fdcUserName}">Robert John</span>&nbsp; -->
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu dropdown-user pull-right" >
+								<li><a href="#"  id="updateMyPassword">修改密码</a></li>
+								<li><a href="../login/logOut">退出</a></li>
+							</ul>
+						</li>
+
+					</ul>
+					<div class="sms_number">
+						<span href="#" th:text="*{username}" >username</span>(<span  th:text="*{name}" >name</span>)
+					</div>
+
+					<!-- 修改客户密码 -->
+					<div id="dialogPassword"  style="display:none">
+						<div class="panel-body pan">
+							<form action="../userInfo/updatePassword" id="defaultPasswordForm" class="form-horizontal" method="post">
+								<input  name="uid"  th:value="*{uid}" type="hidden"/>
+								<div class="form-body pal">
+									<div class="form-group name">
+										<label class="col-lg-3 control-label title">客户名称：</label>
+										<div class="col-lg-5">
+											<input  name="name"  th:value="*{name}"  readonly="readonly" type="text" placeholder="客户名称" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group username">
+										<label class="col-lg-3 control-label title">客户账号：</label>
+										<div class="col-lg-5">
+											<input name="username"  th:value="*{username}"  readonly="readonly"  type="text" placeholder="客户账号" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group password">
+										<label class="col-lg-3 control-label title">请输入密码：</label>
+										<div class="col-lg-5">
+											<input  name="password" type="password" placeholder="登录密码" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group confirmPassword">
+										<label class="col-lg-3 control-label title">确认密码：</label>
+										<div class="col-lg-5">
+											<input name="confirmPassword" type="password" placeholder="登录密码" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="form-actions text-right pal">
+									<button type="submit" id="submitPasswordButton" class="btn btn-primary" >保存</button>
+									<button type="button" id="closePasswordButton" class="btn btn-primary" >关闭</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</nav>
+		</div>
+
+	</header>
+
+</body>
+</html>

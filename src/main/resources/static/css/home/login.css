@@ -1,0 +1,118 @@
+.login-header {
+	margin-bottom: 0px;
+}
+
+.login-header .login-top-bg {
+	display: block;
+	/*background: #e9f1f5 url("../img/dj-content-wrap-after-index-tit.png") no-repeat 5% 0px;*/
+	height: 66px;
+}
+
+.login-header .login-top-menu {
+	right: 20px;
+}
+
+.login-header .sitename {
+	width: 300px;
+	float: left;
+}
+
+.login-header .sitename h2 {
+	display: block;
+	margin-left: 50px;
+	height: 66px;
+	font-size: 20px;
+	font-weight: 300;
+}
+
+.login_content {
+	margin-top: -15px;
+	padding-top: 65px;
+	min-height: 560px;
+	vertical-align: middle;
+	width: 100%;
+	padding-bottom: 90px;
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.login_content #login-banner {
+	float: left;
+	padding-left: 10px;
+}
+
+#regist {
+	width: 80%;
+	margin: 0 auto;
+	min-width: 1000px;
+}
+
+.login_content #login-banner {
+	float: left;
+	padding-left: 10px;
+}
+
+#login-banner img {
+	max-width: 100%;
+	width: 550px;
+	height: 348px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+#login {
+	float: left;
+	padding: 0 10px 0px 20px;
+	 
+}
+
+#login form {
+	width: 400px;
+	height:280px;
+	margin-top:30px;
+	padding:35px 20px;
+	font-weight: normal;
+	border: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+	font-size: 15px;
+}
+#login .failMsg{
+	color: red;
+	font-size: 18px;
+	margin-left: 65px;
+    margin-bottom: 15px;
+}
+#login .layui-btn {
+	padding: 0px 30px 1px;
+	width: 100%;
+}
+
+#login a.send {
+	display: inline-block;
+	border: 1px solid #E8E8E8;
+	border-radius: 3px;
+	width: 158px;
+	height: 40px;
+	line-height: 40px;
+	color: #333;
+	font-size: 14px;
+	text-align: center;
+	background: #FFF none repeat scroll 0% 0%;
+	vertical-align: middle;
+	margin-top: 10px;
+}
+
+#login #nav {
+	text-shadow: #FFF 0 0 5px, #FFF 0 0 10px;
+	float: right;
+	margin: 0 2px 0 0px;
+	padding: 16px 0px 0 0px;
+}
+
+.footer {
+	padding: 20px 0;
+}
+
+#vcode{
+	width:123px;padding: 6px 12px;border: 1px solid #ccc;font-size: 14px;line-height: 1.42857143;color: #555;background-color: #fff;border-radius: 4px;box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}

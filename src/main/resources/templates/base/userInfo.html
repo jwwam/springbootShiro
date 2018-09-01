@@ -1,0 +1,145 @@
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Springboot整合Shiro</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+	<link type="text/css" rel="stylesheet" href="../js/datatables/dataTables.jqueryui.min.css" />
+	<link type="text/css" rel="stylesheet" href="../js/tree-multiselect/jquery.tree-multiselect.min.css" />
+	<link href="../css/base/userInfo.css" rel="stylesheet"/>
+	<!--内容-->
+	<div id="page-wrapper" >
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">客户管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="../home/view">欢迎主页</a>&nbsp;&nbsp;<i
+						class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">主页</a>&nbsp;&nbsp;<i
+						class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">客户管理</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+		<div class="page-content">
+				<div class="form-actions text-right pal" >
+					 <div class="input-group col-md-3" style="margin-top:0px;positon:relative;float: right;">
+                    <input type="text" class="form-control input-title" placeholder="请输入客户名称" />
+	               	 	<span class="input-group-btn">
+	                  		 <button class="btn btn-primary btn-search">查找</button>
+
+	               	 	</span>
+	                </div>
+				</div>
+				<div class="form-actions text-left pal">
+					<button id="addUserInfo" class="btn btn-primary">添加</button>
+				</div>
+				<div class="panel-body">
+					<!--style="font-family: 'Open Sans', sans-serif;font-size: 13px;line-height: 1.42857143;color: #999999;height: 100%;padding: 15px;"-->
+					<table id="datatable"  class="datatable" cellspacing="3" width="100%">
+						<thead>
+						<tr>
+							<th>客户ID</th>
+							<th>客户账号</th>
+							<th>客户名称</th>
+							<th>状态</th>
+							<th style="text-align: center;">操作</th>
+						</tr>
+						</thead>
+					</table>
+				</div>
+		</div>
+
+		<!-- 添加客户dialog -->
+		<div id="userInfodialog" style="display:none">
+			<div class="panel-body pan">
+				<form action="../userInfo/userAdd" id="userInfoDefaultForm" class="form-horizontal" method="post">
+					<input id="uid" name="uid" value="" type="hidden"/>
+					<div class="form-body pal"   style="min-height:400px; " >
+						<div style="float: left;width:500px;">
+							<div class="form-group name">
+								<label class="col-lg-3 control-label title">客户名称：</label>
+								<div class="col-lg-5">
+									<input id="name" name="name" type="text" placeholder="客户名称" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group username">
+								<label class="col-lg-3 control-label title">客户账号：</label>
+								<div class="col-lg-5">
+									<input id="username" name="username" type="text" placeholder="客户账号" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group password">
+								<label class="col-lg-3 control-label title">请输入密码：</label>
+								<div class="col-lg-5">
+										<input id="password" name="password" type="password" placeholder="登录密码" class="form-control" />
+								</div>
+							</div>
+							 <div class="form-group confirmPassword">
+								<label class="col-lg-3 control-label title">确认密码：</label>
+								<div class="col-lg-5">
+										<input id="confirmPassword" name="confirmPassword" type="password" placeholder="登录密码" class="form-control" />
+								</div>
+							</div>
+						</div>
+						<div style="float: right;width:500px;"  >
+							 <div class="form-group state" >
+								<label class="col-lg-3 control-label title">账号状态：</label>
+								<div class="col-lg-5">
+										<select id="state" name="state" style="width: 100px;text-align: center;font-size: 16px;">
+											<option value="0">启用</option>
+											<option  value="1">禁用</option>
+										</select>
+								</div>
+							</div>
+							 <div class="form-group">
+								<label class="col-lg-3 control-label title">描述：</label>
+								<div class="col-lg-5">
+										<textarea id="remarks" name="remarks"  placeholder="描述" class="form-control" ></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions text-right pal"  style="float: right" >
+						<button type="submit" class="btn btn-primary" >保存</button>
+						<button type="button" id="userInfoCloseButton" class="btn btn-primary" >关闭</button>
+					</div>
+				</form> 
+			</div>
+		</div>
+
+		<!-- 分配客户角色dialog -->
+		    <div class="modal inmodal fade" id="grantAuthorityModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+		        <div class="modal-dialog">
+		            <div class="modal-content animated fadeIn">
+		                <div class="modal-header btn-primary">
+		                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+		                    </button>
+		                    <h4 class="modal-title" id="AuthorityTitle"></h4>
+		                </div>
+		                <div class="modal-body" id="authorityBody">
+		                  
+		                </div>
+		                <input type="hidden" id="userInfoId" name="uid" />
+		                <div class="modal-footer">
+		                    <button type="button" class="btn btn-default" id="authorityClose" data-dismiss="modal">关闭</button>
+		                    <button type="button" class="btn btn-primary" id="authoritysubmit">提交</button>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+    
+    
+	</div>
+	<div id="userInfodialog5" class="title" style="display:none"></div>
+<script type="text/javascript" src="../js/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../js/datatables/dataTables.jqueryui.min.js"></script>
+<script type="text/javascript" src="../js/tree-multiselect/jquery.tree-multiselect.min.js"></script>
+<script type="text/javascript" src="../js/home/md5.js"></script>
+<script type="text/javascript" src="../base/userInfo.js"></script>
+</body>
+</html>
